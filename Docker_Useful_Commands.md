@@ -8,3 +8,10 @@
 
 ## `$ docker exec -it <container_id> bash`
 #### Ouvres un terminal correspondant au conteneur qui a été créé.
+
+## `$ docker build -t <image_name>:<version> <docker_file_directory>`
+#### Crées une image à partir du dockerfile trouvé dans le répertoire spécifié.
+
+
+# `docker run -p  10000:8000 <container_id>`
+#### Cette commande permet de rediriger la sortie sur le port 10000 de la machine locale. 
