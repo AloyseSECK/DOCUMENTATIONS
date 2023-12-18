@@ -5,7 +5,7 @@ Pour appuyer cette doc, nous allons créer un environnement avec du [Django](htt
 Cette documentation suppose que vous avez déjà connaisance  des deux frameworks.
 
 
-### Initialisation des projets
+## Initialisation des projets
 - **Django**   
 Pour initialiser le projet django, nous utiliserons la commande suivante :  
 `django-admin startproject <nom_du_projet>`   
@@ -18,7 +18,7 @@ Plusieurs solutions sont possibles pour créer une application VueJS, nous utili
 Ce [tutoriel](https://vuejs.org/guide/quick-start.html) montre les différentes étapes à suivre.
 
 
-### Création des dockerfile
+## Création des dockerfile
 Chaque projet doit contenir son **dockerfile**. Ce fichier permet de créer une image de notre application qu'on pourra construire puis déployer dans un serveur de notre choix.  
 
 Pour notre projet la partie django sera appelée `backend` et la partie VueJS, `frontend`.
@@ -85,3 +85,38 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 ```
 L'image du frontend est construite à partir de node. Comme pour le backend, toutes les dépendances sont installées puis le code source est copié dans le répertoire de l'image. Enfin on utilise nginx, un serveur web pour générer le contenu de notre frontend.
+
+## Création d'un environnement sur gitlab
+
+Un environnement est soit <u>statique</u> soit <u>dynamique</u>.
+
+- **Environnements statiques**  
+    Les environnements statiques ont 3 particularités : 
+    - Leur nom est fixe, ils ne subissent pas de modifications lorsqu'on effectue un déploiement. Par exemple (preproduction, test, production...) sont des noms d'environnements statiques.
+    - Ils sont souvent réutilisés par plusieurs déploiements.
+    - Ils sont créés manuellement.  
+
+    Leur création peut se faire soit dans **`l'interface gitlab`** soit dans le fichier **`.gitlab-ci.yml`**
+    - **Dans l'interface gitlab** :   
+    Sur le volet latéral de notre projet, il suffit de cliquer sur   
+    `Operate` ,  
+    `Environments` puis   
+    `Create an environment`  
+    
+        Une fenêtre contextuelle s'affiche et on remplit les champs.
+    
+    - **Dans le fichier .gitlab-ci.yml** :  
+    L'extrait de code suivant illustre un "job " appelé *deploy_backend_prod* qui déploie notre application `backend` dans un environnement appelé **`prod`**.
+    ```yaml
+    deploy_backend_prod:
+      stage: deploy
+      extends: .aws_k8s
+      script:
+        - kubectl apply -f backend/deployment.yaml
+      environment:
+        name: prod
+      only:
+        - master   
+    ```
+
+- **Environnements dynamiques**
