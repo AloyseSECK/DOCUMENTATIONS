@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 ## DOCKER USEFUL COMMANDS
 
 ## `$ docker ps`
@@ -14,4 +16,5 @@
 
 
 # `docker run -p  10000:8000 <container_id>`
-#### Cette commande permet de rediriger la sortie sur le port 10000 de la machine locale. 
+#### Cette commande permet de rediriger la sortie sur le port 10000 de la machine locale : expose le réseau du conteneur au réseau local
+
