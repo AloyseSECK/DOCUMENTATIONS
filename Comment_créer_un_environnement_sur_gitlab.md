@@ -23,8 +23,8 @@ Chaque projet doit contenir son **dockerfile**. Ce fichier permet de créer une 
 
 Pour notre projet la partie django sera appelée `backend` et la partie VueJS, `frontend`.
 
-Voici par exemple le dockerfile du backend.
-```
+#### - Backend Dockerfile
+```Dockerfile
 FROM python:3.10-slim-buster
 
 # Set working directory (inside image)
@@ -49,3 +49,39 @@ COPY ../ .
 
 CMD ["gunicorn", "--preload", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
 ```
+
+L'image de notre application backend est construite à partir d'une image python. Ensuite les différentes dépendances sont installées, puis on copie tous les fichiers du code source dans le répertoire de base de l'image créée. Pour finir, on éxécute l'application grâce au serveur web gunicorn.
+
+#### - Frontend Dockerfile
+```Dockerfile
+# Name the node stage "builder"
+FROM node:14 AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy all files from current directory to working dir in image
+COPY . .
+
+# install node modules and build assets
+RUN npm install && npm run build
+
+# nginx state for serving content
+FROM nginx:alpine
+
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=builder /app/dist .
+
+EXPOSE 80
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+```
+L'image du frontend est construite à partir de node. Comme pour le backend, toutes les dépendances sont installées puis le code source est copié dans le répertoire de l'image. Enfin on utilise nginx, un serveur web pour générer le contenu de notre frontend.
