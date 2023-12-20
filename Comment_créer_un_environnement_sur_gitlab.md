@@ -1,98 +1,66 @@
-# Comment créer un environnement sur gitlab
+# Configuration du projet pour un déploiement automatique CI/CD
+Pour assurer un déploiement automatique sur Gitlab il faut passer par un certain nombre d'étapes.
 
-Cette documentation a pour but de montrer les différentes étapes pour créer un environnement sur Gitlab.  
-Pour appuyer cette doc, nous allons créer un environnement avec du [Django](https://www.djangoproject.com/) en backend et du [VueJS](https://vuejs.org/) en frontend.  
-Cette documentation suppose que vous avez déjà connaisance  des deux frameworks.
+1. <u>__Création du fichier **`.gitlab-ci.yml`**__</u>  
+Le fichier ___.gitlab-ci.yml___ est un fichier de configuration qui servira à définir les étapes du pipeline de notre projet. Par conséquent, il doit être à la racine de ce dernier.
 
-
-## Initialisation des projets
-- **Django**   
-Pour initialiser le projet django, nous utiliserons la commande suivante :  
-`django-admin startproject <nom_du_projet>`   
-Cette commande génère une arborescence de fichiers qui permet de lancer une application web minimaliste avec quelques fonctionnalités.  
-    
-    *<u>NB</u>* : IL faudra s'assurer au préalable que toutes les librairies nécessaires sont installées. On pourra utiliser un [environnement virtuel python](https://docs.python.org/fr/3/library/venv.html) pour éviter les conflits de dépendances. 
-
-- **VueJS**   
-Plusieurs solutions sont possibles pour créer une application VueJS, nous utiliserons le gestionnaire de paquets **<u>npm</u>** et l'outil [Vue CLI](https://cli.vuejs.org/#getting-started).       
-Ce [tutoriel](https://vuejs.org/guide/quick-start.html) montre les différentes étapes à suivre.
+2. <u>__Configuration des étapes du pipeline__</u>  
+Après avoir créé le fichier de configuration, il faut définir les étapes du pipeline comme la *compilation*, les *tests*, le *déploiement* etc. Ces étapes sont appelées __stages__ et dans le fichier de configuration, nous définirons plusieurs **jobs** dont chacun correspond à une étape précise.  
+A noter que les **stages** s'exécutent dans l'ordre défini dans le fichier `.gitlab-ci.yml` et les **jobs** peuvent s'exécuter parallèlement s'ils appartiennent au même *stage*.
 
 
-## Création des dockerfile
-Chaque projet doit contenir son **dockerfile**. Ce fichier permet de créer une image de notre application qu'on pourra construire puis déployer dans un serveur de notre choix.  
+3. <u>__Configuration des déclencheurs__ </u>  
+La dernière étape consiste à configurer les déclencheurs pour lancer automatiquement le pipeline CI/CD lorsqu'un commit est effectué sur une branche spécifique par exemple.
 
-Pour notre projet la partie django sera appelée `backend` et la partie VueJS, `frontend`.
+```yaml
+stages:
+  - build
+  - test
+  - deploy
 
-#### - Backend Dockerfile
-```Dockerfile
-FROM python:3.10-slim-buster
+variables:
+  ENVIRONMENT: "production"
 
-# Set working directory (inside image)
-WORKDIR /app
+building:
+  stage: build
+  script:
+    - echo "Building the application..."
+    # Commandes de compilation
+testing:
+  stage: test
+  script:
+    - echo "Running tests..."
+    # Commandes de test
 
-# Install dependencies
-COPY requirements.txt .
+merge_validation:
+  stage: test
+  script:
+    - echo "Validating after merge..."
+    # Commandes pour valider les changements après la fusion des branches
+  only:
+    - merge_requests  # Exécuter cette étape uniquement pour les demandes de fusion (merge requests)
 
-RUN apt-get update \
-    && apt-get -y install libpq-dev gcc \
-    && apt-get -y install python3-dev \
-    && pip install psycopg2
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-# Copy the source code
-COPY ../ .
-
-
-# Start the server
-
-CMD ["gunicorn", "--preload", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
-```
-
-L'image de notre application backend est construite à partir d'une image python. Ensuite les différentes dépendances sont installées, puis on copie tous les fichiers du code source dans le répertoire de base de l'image créée. Pour finir, on éxécute l'application grâce au serveur web gunicorn.
-
-#### - Frontend Dockerfile
-```Dockerfile
-# Name the node stage "builder"
-FROM node:14 AS builder
-
-# Set working directory
-WORKDIR /app
-
-# Copy all files from current directory to working dir in image
-COPY . .
-
-# install node modules and build assets
-RUN npm install && npm run build
-
-# nginx state for serving content
-FROM nginx:alpine
-
-# Set working directory to nginx asset directory
-WORKDIR /usr/share/nginx/html
-
-# Remove default nginx static assets
-RUN rm -rf ./*
-
-# Copy static assets from builder stage
-COPY --from=builder /app/dist .
-
-EXPOSE 80
-
-# Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+deployment:
+  stage: deploy
+  script:
+    - echo "Deploying to $ENVIRONMENT..."
+    # Commandes de déploiement
+  environment:
+    name: production
+    url: https://example.com
+  only:
+    - master  # Déployer uniquement depuis la branche master
 
 ```
-L'image du frontend est construite à partir de node. Comme pour le backend, toutes les dépendances sont installées puis le code source est copié dans le répertoire de l'image. Enfin on utilise nginx, un serveur web pour générer le contenu de notre frontend.
+Dans cet exemple nous avons 3 étapes : __build__, __test__ et __deploy__. Les jobs *testing* et *merge_validation* appartiennent à l'étape de <u>test</u> tandis que *building* et *deployment* appartiennent respectivement aux étapes <u>build</u> et <u>deploy</u>. Cet exemple est à adapter en fonction du projet. En effet, ici on fait uniquement des affichages dans les scripts mais il faudra écrire les vraies instructions de test, de compilation ... afin d'assurer le déploiement automatique de l'application.  
 
-## Création d'un environnement sur gitlab
+# Création d'un environnement sur gitlab
 
-Un environnement est soit <u>statique</u> soit <u>dynamique</u>.
+Un environnement est soit **<u>statique</u>** soit **<u>dynamique</u>**.
 
-- **Environnements statiques**  
++ **Environnements statiques**  
     Les environnements statiques ont 3 particularités : 
-    - Leur nom est fixe, ils ne subissent pas de modifications lorsqu'on effectue un déploiement. Par exemple (preproduction, test, production...) sont des noms d'environnements statiques.
+    - Leur nom est fixe, ils ne subissent pas de modifications lorsqu'on effectue un déploiement. Par exemple, *preproduction*, *test* et *production* sont des noms d'environnements statiques.
     - Ils sont souvent réutilisés par plusieurs déploiements.
     - Ils sont créés manuellement.  
 
@@ -106,7 +74,7 @@ Un environnement est soit <u>statique</u> soit <u>dynamique</u>.
         Une fenêtre contextuelle s'affiche et on remplit les champs.
     
     - **Dans le fichier .gitlab-ci.yml** :  
-    L'extrait de code suivant illustre un "job " appelé *deploy_backend_prod* qui déploie notre application `backend` dans un environnement appelé **`prod`**.
+    L'extrait de code suivant illustre un "job" appelé *deploy_backend_prod* qui déploie notre application `backend` dans un environnement appelé **`production`**.
     ```yaml
     deploy_backend_prod:
       stage: deploy
@@ -114,9 +82,27 @@ Un environnement est soit <u>statique</u> soit <u>dynamique</u>.
       script:
         - kubectl apply -f backend/deployment.yaml
       environment:
-        name: prod
+        name: production
       only:
         - master   
     ```
 
-- **Environnements dynamiques**
++ **Environnements dynamiques**
+Les environnements dynamiques eux, sont spécifiques à chaque déploiement et utilisent des variables CI/CD qui sont uniques pour chaque [pipeline](https://docs.gitlab.com/ee/ci/pipelines/).
+
+Pour en créer, nous utiliserons le fichier **`.gitlab-ci.yml`**. 
+```yaml
+deploy_review_app:
+  stage: deploy
+  script: make deploy
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://$CI_ENVIRONMENT_SLUG.example.com
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+```
+Dans l'exemple ci-dessus, chaque fois que le job *deploy_review_app* est exécuté, le nom de l'environnement est défini en utilisant la variable  `$CI_COMMIT_REF_SLUG`.
+
