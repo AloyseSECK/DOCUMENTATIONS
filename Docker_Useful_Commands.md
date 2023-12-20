@@ -12,6 +12,9 @@
 #### Ouvres un terminal correspondant au conteneur qui a été créé.
 NB : Attention pour que cette commande marche il faut bien récupérer l'id du conteneur et non celui de l'image. Il faut donc exécuter `docker ps` pour voir l'id et l'utiliser dans la commande exec. 
 
+## `$ docker rmi <image_name_or_id>`
+#### Supprimes une image docker ; ajouter `-f` pour forcer la suppression 
+
 ## `$ docker build -t <image_name>:<version> <docker_file_directory>`
 #### Crées une image à partir du dockerfile trouvé dans le répertoire spécifié.
 
