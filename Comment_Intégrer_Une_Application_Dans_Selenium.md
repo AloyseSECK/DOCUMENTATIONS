@@ -27,9 +27,13 @@ Par défaut, les scripts de tests se situent dans le fichier test.py.
 Pour des raisons pratiques, nous allons créer un répertoire nommé ``tests`` dans lesquels tous les scripts de test de notre application WEB vont figurer.
 Le répertoire ``reports`` contiendra les rapports de tests générés par pytest dont nous parlerons à la dernière partie de cette documentation.
 
-La documentation officielle de [Selenium](https://www.selenium.dev/documentation/) recommande d'utiliser le design pattern [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) pour écrire des tests. Ce design pattern permet de séparer la logique de test de la logique de l'application. Il permet également de réduire la duplication de code et de faciliter la maintenance des tests.
-Voici à quoi ressemble l'arborescence du projet avec le design pattern Page Object Model : 
-![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Arborescence_du_projet_avec_POM.png)
+La documentation officielle de [Selenium](https://www.selenium.dev/documentation/) recommande d'utiliser le design pattern [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) pour écrire des tests. Ce design pattern permet de séparer la logique de test de la logique de l'application. Il permet également de réduire la duplication de code et de faciliter la maintenance des tests.
+Voici à quoi ressemble l'arborescence du projet avec ce design pattern :    
+
+![image](https://github.com/AloyseSECK/DOCUMENTATIONS/blob/main/Images/Selenium%20DOCS%20img/Arborescence_du_projet_avec_POM.png?raw=true)   
+<u>  **Figure 2 : Arborescence du projet avec le design pattern POM** </u>
+Comme illustré dans la figure ci-dessus, le répertoire 
+
 
 Pour écrire un test, il suffit de créer un fichier python dans le répertoire ``tests``. Voici un exemple de test qui permet de vérifier si le titre de la page d'accueil de notre application est correct.
 
