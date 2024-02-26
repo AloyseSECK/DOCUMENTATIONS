@@ -1,4 +1,4 @@
-# Comment Intégrer Une Application Dans Selenium 
+# Comment intégrer une application dans Selenium 
 
 Dans cette documentation, il sera présenté une méthode pour intégrer une application dans Selenium. Pour cela, 3 sujets seront abordés  :  comment écrire des tests, comment les exécuter et finalement comment analyser les résultats.
 
@@ -15,12 +15,12 @@ de télécharger de webdriver pour le navigateur que vous souhaitez utiliser.
 Il est possible d'écrire des tests en utilisant plusieurs langages de programmation, dont Java, Python, C#, Ruby, etc. Dans cette documentation, nous utiliserons python et la librairie pytest. 
 Pour cela, l'IDE Aqua propose un environnement préconfiguré qui permet de créer des tests en python. Il suffit donc de sélectionner cette option lorsqu'on crée un nouveau projet comme illustré dans la figure suivante.
 
-![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/New_Project_Aqua.png)  
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/New_Project_Aqua.png)  
 <u>  **Figure 1 : Choix du projet** </u>
 
 Une fois le projet sélectionné, voici l'arborescence de fichiers que l'on obtient.   
 
-![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Arborescence_du_projet.png)  
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Arborescence_du_projet.png)  
 <u>  **Figure 2 : Arborescence du projet** </u>
 
 Par défaut, les scripts de tests se situent dans le fichier test.py.
@@ -30,17 +30,113 @@ Le répertoire ``reports`` contiendra les rapports de tests générés par pytes
 La documentation officielle de [Selenium](https://www.selenium.dev/documentation/) recommande d'utiliser le design pattern [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) pour écrire des tests. Ce design pattern permet de séparer la logique de test de la logique de l'application. Il permet également de réduire la duplication de code et de faciliter la maintenance des tests.
 Voici à quoi ressemble l'arborescence du projet avec ce design pattern :    
 
-![image](https://github.com/AloyseSECK/DOCUMENTATIONS/blob/main/Images/Selenium%20DOCS%20img/Arborescence_du_projet_avec_POM.png?raw=true)   
-<u>  **Figure 2 : Arborescence du projet avec le design pattern POM** </u>
-Comme illustré dans la figure ci-dessus, le répertoire 
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Arborescence_du_projet_avec_POM.png)   
+<u>  **Figure 3 : Arborescence du projet avec le design pattern POM** </u>   
 
+Comme illustré dans la figure ci-dessus, le répertoire ``pages`` contient des classes qui représentent chacunes des pages de l'application. Chaque classe dispose de méthodes qui permettent d'interagir avec les éléments de la page.  
 
-Pour écrire un test, il suffit de créer un fichier python dans le répertoire ``tests``. Voici un exemple de test qui permet de vérifier si le titre de la page d'accueil de notre application est correct.
-
+Dans l'exemple suivant, nous avons une classe AdminPage qui représente la page d'administration de notre application. Cette classe dispose de méthodes qui permettent de se connecter, de se déconnecter, de naviguer vers la page des utilisateurs, de supprimer un utilisateur, etc. La librairie selenium contient un package nommé [**By**](https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/By.html) qui permet de sélectionner des éléments de la page en utilisant des sélecteurs CSS, XPATH, etc. L'IDE Aqua quant à lui propose une fonctionnalité qui permet de générer automatiquement les sélecteurs CSS et XPATH des éléments de la page : c'est le __*Web Inspector*__. 
 
 ```python
-from selenium import webdriver
+# pages/AdminPage.py
+from pages import By, webdriver, DEFAULT_PASSWORD, ADMIN_USERNAME
 
+class AdminPage:
+    def __init__(self, driver: webdriver):
+        self.driver = driver
+        self.driver.get("http://127.0.0.1:8000/admin")
+        self.username_input = self.driver.find_element(By.CSS_SELECTOR, "#id_username")
+        self.password_input = self.driver.find_element(By.CSS_SELECTOR, "#id_password")
+        self.log_in_button = self.driver.find_element(By.CSS_SELECTOR, "input[value$='in']")
+
+    def log_in(self):
+        self.username_input.send_keys(ADMIN_USERNAME)
+        self.password_input.send_keys(DEFAULT_PASSWORD)
+        self.log_in_button.click()
+
+    def get_title(self):
+        h1 = self.driver.find_element(By.CSS_SELECTOR, "h1")
+        return h1.text
+
+    def go_to_users_page(self):
+        users_page = self.driver.find_element(By.XPATH, "//*[text() = 'Users']")
+        users_page.click()
+
+    def get_user(self, username):
+        return self.driver.find_element(By.XPATH, f"//*[text() = '{username}']")
+        
+    def delete_user(self, username):
+        user = self.get_user(username)
+        user.click()
+        delete_button = self.driver.find_element(By.CSS_SELECTOR, "a[class='deletelink']")
+        delete_button.click()
+        self.driver.find_element(By.CSS_SELECTOR, "input[value$='sure']").click()
+    
+    def log_out(self):
+        button_log_out = self.driver.find_element(By.XPATH, "//button[@type='submit']")
+        button_log_out.click()
+
+```
+
+#### Web Inspector 
+Pour utiliser le __*Web Inspector*__, il suffit de cliquer sur l'icône de l'outil dans la barre d'outils de l'IDE Aqua. Ensuite, il suffit de cliquer sur l'élément de la page que vous souhaitez inspecter. L'IDE Aqua affiche alors les sélecteurs CSS et XPATH de l'élément sélectionné comme illustré dans la figure suivante.
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Web_Inspector.png)
+
+Dans la suite, il faut rédiger les scripts de test. Pour ce faire, il suffit de créer un fichier python dans le répertoire ``tests``. Le nom du fichier doit soit commencer par le mot ``test_``, soit se terminer par le mot ``_test`` afin qu'il soit reconnu comme un fichier qui exécute des tests. Par exemple, ``test_admin_page.py`` ou ``admin_page_test.py``. 
+
+
+Voici un exemple de script de test qui utilise la classe AdminPage pour tester la page d'administration de notre application ainsi qu'une autre page qui permet d'inscrire un utilisateur dans notre application WEB. 
+Il y a donc deux tests : 
+- Le premier test __*(test_admin_login(self))*__ vérifie si l'administrateur peut se connecter à la page d'administration.
+- Le second test __*(test_sign_up_with_vue(self))*__ vérifie si un utilisateur peut s'inscrire dans notre application WEB et si cet utilisateur est bien ajouté à la base de données. Après le test, l'utilisateur est supprimé de la base de données.    
+
+<u>Remarques :</u> Le driver utilisé est celui de Chrome. Il est possible de changer le driver en fonction du navigateur que vous souhaitez utiliser. La méthode __*(browser_setup_and_teardown)*__ est un fixture qui permet de configurer le driver avant et après chaque test.  
+
+```python
+# tests/test_application.py
+import time
+import pytest
+from selenium import webdriver
+from pages.AdminPage import AdminPage
+from pages.SignUpPage import SignUpPage
+
+
+class TestApp:
+    # 1. Check driver configuration in browser_setup_and_teardown
+    # 2. Run 'Selenium Tests' configuration
+    # 3. Test report will be created in reports/ directory
+    username = "Marcus Brown"
+    password = "password123"
+
+    @pytest.fixture(autouse=True)
+    def browser_setup_and_teardown(self):
+        self.driver = webdriver.Chrome()
+
+        self.driver.maximize_window()
+        self.driver.implicitly_wait(10)
+
+        yield
+
+        self.driver.close()
+        self.driver.quit()
+
+    def test_admin_login(self):
+        admin_page = AdminPage(self.driver)
+        admin_page.log_in()
+        assert admin_page.get_title() == "Site administration"
+
+    def test_sign_up_with_vue(self):
+        sign_up_page = SignUpPage(self.driver)
+        sign_up_page.sign_up(self.username)
+        time.sleep(5)
+
+        # check if the user has been added to the database
+        admin_page = AdminPage(self.driver)
+        admin_page.log_in()
+        admin_page.go_to_users_page()
+        assert admin_page.get_user(self.username) is not None
+        admin_page.delete_user(self.username)
+        admin_page.log_out()
 
 ```
 
