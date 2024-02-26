@@ -158,6 +158,9 @@ Pour ne pas avoir à taper la commande sur le terminal, l'IDE Aqua propose une f
 
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Run_Tests.png)
 
+Il est nécessaire d'éditer la configuration de l'éxécution des tests pour spécifier le répertoire dans lequel se trouvent les tests. Pour cela, il faut cliquer sur l'icône des 3 points à droite de la flèche verte, puis sur **Edit Configurations**. Ensuite, il faut spécifier le répertoire dans lequel se trouvent les tests comme illustré dans la figure suivante.
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Edit_Configuration.png)
+
 ## Récupération des résultats
 
 
