@@ -18,12 +18,27 @@ Pour cela, l'IDE Aqua propose un environnement préconfiguré qui permet de cré
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/New_Project_Aqua.png)  
 <u>  **Figure 1 : Choix du projet** </u>
 
-Une fois le projet sélectionné, voici l'arborescence de fichiers qu'on obtient.
+Une fois le projet sélectionné, voici l'arborescence de fichiers que l'on obtient.   
+
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Arborescence_du_projet.png)  
+<u>  **Figure 2 : Arborescence du projet** </u>
+
+Par défaut, les scripts de tests se situent dans le fichier test.py.
+Pour des raisons pratiques, nous allons créer un répertoire nommé ``tests`` dans lesquels tous les scripts de test de notre application WEB vont figurer.
+Le répertoire ``reports`` contiendra les rapports de tests générés par pytest dont nous parlerons à la dernière partie de cette documentation.
+
+La documentation officielle de [Selenium](https://www.selenium.dev/documentation/) recommande d'utiliser le design pattern [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) pour écrire des tests. Ce design pattern permet de séparer la logique de test de la logique de l'application. Il permet également de réduire la duplication de code et de faciliter la maintenance des tests.
+Voici à quoi ressemble l'arborescence du projet avec le design pattern Page Object Model : 
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Arborescence_du_projet_avec_POM.png)
+
+Pour écrire un test, il suffit de créer un fichier python dans le répertoire ``tests``. Voici un exemple de test qui permet de vérifier si le titre de la page d'accueil de notre application est correct.
 
 
+```python
+from selenium import webdriver
 
 
-
+```
 
 ## Exécution des tests
 
