@@ -13,8 +13,17 @@ de télécharger de webdriver pour le navigateur que vous souhaitez utiliser.
 
 ## Ecriture des tests
 Il est possible d'écrire des tests en utilisant plusieurs langages de programmation, dont Java, Python, C#, Ruby, etc. Dans cette documentation, nous utiliserons python et la librairie pytest. 
-Pour cela, l'IDE Aqua propose un environnement préconfiguré qui permet de créer des tests en python. Il suffit donc de sélectionner cette option lorsqu'on crée un nouveau projet.  
-![image](https://user-images.githubusercontent.com/72658558/134760073-3e3e3e3e-3e3e-3e3e-3e3e-3e3e3e3e3e3e.png)
+Pour cela, l'IDE Aqua propose un environnement préconfiguré qui permet de créer des tests en python. Il suffit donc de sélectionner cette option lorsqu'on crée un nouveau projet comme illustré dans la figure suivante.
+
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/New_Project_Aqua.png)  
+<u>  **Figure 1 : Choix du projet** </u>
+
+Une fois le projet sélectionné, voici l'arborescence de fichiers qu'on obtient.
+
+
+
+
+
 
 ## Exécution des tests
 
