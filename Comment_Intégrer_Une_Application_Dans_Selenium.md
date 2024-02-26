@@ -159,8 +159,19 @@ Pour ne pas avoir à taper la commande sur le terminal, l'IDE Aqua propose une f
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Run_Tests.png)
 
 Il est nécessaire d'éditer la configuration de l'éxécution des tests pour spécifier le répertoire dans lequel se trouvent les tests. Pour cela, il faut cliquer sur l'icône des 3 points à droite de la flèche verte, puis sur **Edit Configurations**. Ensuite, il faut spécifier le répertoire dans lequel se trouvent les tests comme illustré dans la figure suivante.
+
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Edit_Configuration.png)
 
 ## Récupération des résultats
+En ce qui concerne la récupération des résultats des tests, il est possible de le faire en rajoutant l'option ``--html=reports/report.html`` à la commande de test. Par exemple, pour exécuter les tests du fichier ``test_application.py`` et générer un rapport de test, il suffit de taper la commande suivante : 
 
+```bash
+pytest tests/test_application.py --html=reports/report.html
+```
+
+Cette commande permet à pytest de générer un rapport qui contient des informations sur les tests qui ont été exécutés. Ce rapport est généré dans le répertoire ``reports``. Pour visualiser le rapport, il suffit d'ouvrir le fichier ``report.html`` avec un navigateur web.
+Les résultats sont tout de même affichés dans la console après l'exécution des tests.
+
+La figure suivante montre un exemple de rapport de test généré par pytest.
+![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Test_Report.png)
 
