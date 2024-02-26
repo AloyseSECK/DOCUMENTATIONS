@@ -175,3 +175,4 @@ Les résultats sont tout de même affichés dans la console après l'exécution 
 La figure suivante montre un exemple de rapport de test généré par pytest.
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Test_Report.png)
 
+On peut voir que les deux tests ont été exécutés. Le premier test (*__test_admin_login()__*) a réussi tandis que le second (__*test_sign_up_with_vue()*__) a échoué. Le rapport contient également des informations sur le temps d'exécution des tests, le nom du fichier de test, le nom de la méthode de test, etc.
