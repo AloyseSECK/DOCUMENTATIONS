@@ -24,7 +24,7 @@ Une fois le projet créé, voici l'arborescence de fichiers que l'on obtient.
 <u>  **Figure 2 : Arborescence du projet** </u>
 
 Par défaut, les scripts de tests se situent dans le fichier test.py.
-Pour des raisons pratiques, nous allons créer un répertoire nommé ``tests`` dans lesquels tous les scripts de test de notre application WEB vont être stockés.
+Cependant, pour des raisons pratiques, nous allons créer un répertoire nommé ``tests`` dans lequel tous les scripts de test de notre application WEB seront stockés.
 Le répertoire ``reports`` contiendra les rapports de tests générés par pytest dont nous parlerons dans la dernière partie de cette documentation.
 
 La documentation officielle de [Selenium](https://www.selenium.dev/documentation/) recommande d'utiliser le design pattern [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) pour écrire des tests. Ce design pattern permet de séparer la logique de test de la logique de l'application. Il permet également de réduire la duplication de code et de faciliter la maintenance des tests.
@@ -79,7 +79,7 @@ class AdminPage:
 ```
 
 #### Web Inspector  
-Pour utiliser le __*Web Inspector*__, il faut cliquer sur l'icône de l'outil à droite dans la barre d'outils de l'IDE Aqua. Ensuite, il suffit de cliquer sur l'élément de la page que vous souhaitez inspecter. L'IDE Aqua affiche alors les sélecteurs CSS et XPATH de l'élément sélectionné comme illustré dans la figure suivante. En cliquant sur le bouton **+**, l'élément sera ajouté directement dans le script de test.
+Pour utiliser le __*Web Inspector*__, il faut cliquer sur son icône à droite dans la barre d'outils de l'IDE Aqua. Ensuite, il suffit de cliquer sur l'élément de la page que vous souhaitez inspecter. L'IDE Aqua affiche alors les sélecteurs CSS et XPATH de l'élément sélectionné comme illustré dans la figure suivante. En cliquant sur le bouton **+**, l'élément sera ajouté directement dans le script de test.
 
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Web_Inspector.png)    
 <u>  **Figure 4 : Web Inspector** </u>   
