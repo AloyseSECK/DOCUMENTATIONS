@@ -84,7 +84,7 @@ Pour utiliser le __*Web Inspector*__, il faut cliquer sur son icône à droite d
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Web_Inspector.png)    
 <u>  **Figure 4 : Web Inspector** </u>   
 
-Dans la suite, il faut rédiger les scripts de test. Pour ce faire, il suffit de créer un fichier python dans le répertoire ``tests``. Le nom du fichier doit soit commencer par le mot ``test_``, soit se terminer par le mot ``_test`` afin qu'il soit reconnu comme un fichier qui exécute des tests. Par exemple, ``test_admin_page.py`` ou ``admin_page_test.py``. 
+Dans la suite, il faut rédiger les scripts de test. Pour ce faire, il suffit de créer un fichier python dans le répertoire ``tests``. Le nom du fichier doit soit commencer par le mot clef ``test_``, soit se terminer par ``_test`` afin qu'il soit reconnu comme un fichier qui exécute des tests. Par exemple, ``test_admin_page.py`` ou ``admin_page_test.py`` sont des noms de fichier valides. 
 
 
 Voici un exemple de script de test qui utilise la classe AdminPage pour tester la page d'administration de notre application ainsi qu'une autre page qui permet d'inscrire un utilisateur dans notre application WEB. 
