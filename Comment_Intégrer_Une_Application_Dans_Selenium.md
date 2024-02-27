@@ -16,9 +16,9 @@ Il est possible d'écrire des tests en utilisant plusieurs langages de programma
 Pour cela, l'IDE Aqua propose un environnement préconfiguré qui permet de créer des tests en python. Il suffit donc de sélectionner cette option lorsque l'on crée un nouveau projet comme illustré dans la figure suivante.
 
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/New_Project_Aqua.png)  
-<u>  **Figure 1 : Choix du projet** </u>
+<u>  **Figure 1 : Initialisation du projet** </u>
 
-Une fois le projet sélectionné, voici l'arborescence de fichiers que l'on obtient.   
+Une fois le projet créé, voici l'arborescence de fichiers que l'on obtient.   
 
 ![image](https://raw.githubusercontent.com/AloyseSECK/DOCUMENTATIONS/main/Images/Selenium%20DOCS%20img/Arborescence_du_projet.png)  
 <u>  **Figure 2 : Arborescence du projet** </u>
