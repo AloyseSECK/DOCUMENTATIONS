@@ -16,6 +16,10 @@ __Affiche les logs (journaux) du conteneur spécifié.__
 __NB : Attention pour que cette commande marche il faut bien récupérer l'id du conteneur et non celui de l'image. Il faut donc exécuter `docker ps` pour voir l'id et l'utiliser dans la commande exec.__
 
 
+## `$ docker run -it <image_id> bash`
+#### - Ouvres un terminal correspondant à une image qui a été créé.
+
+
 ## `$ docker rmi <image_name_or_id>`
 __Supprimes une image docker ; ajouter `-f` pour forcer la suppression__ 
 
