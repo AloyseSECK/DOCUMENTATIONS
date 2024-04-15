@@ -2,8 +2,8 @@
 
 ## DOCKER USEFUL COMMANDS
 
-## `$ docker ps`
-__Affiche une liste des conteneurs en cours d'exécution.__
+## `$ docker ps -a`
+__Affiche une liste des conteneurs en cours d'exécution. Le flag -a permet d'afficher tous les conteneurs qu'ils soient en exécution ou NON__
 
 
 ## `$ docker logs <container_id>`
