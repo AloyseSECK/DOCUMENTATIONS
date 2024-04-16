@@ -30,3 +30,8 @@ chmod +x cm_darwin_amd64
 ```bash
 ./cm_darwin_amd64 selenoid stop 
 ```
+
+- Pour mettre à jour la config de selenoid. En général lorsque le browsers.json est modifié: 
+```bash
+./cm_darwin_amd64 selenoid update
+```
