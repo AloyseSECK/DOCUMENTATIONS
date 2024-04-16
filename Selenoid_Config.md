@@ -16,7 +16,12 @@ Redémarrer la machine pour que les changements prennent effet
 ```bash
 chmod +x cm_darwin_amd64
 ```
-- Ensuite tapez : 
+- Ensuite tapez pour lancer le conteneur avec l'image de selenoid: 
 ```bash
 ./cm_darwin_amd64 selenoid start --vnc
+```
+
+- Pour lancer le selenium ui: 
+```bash
+./cm_darwin_amd64 selenoid-ui start 
 ```
