@@ -25,3 +25,8 @@ chmod +x cm_darwin_amd64
 ```bash
 ./cm_darwin_amd64 selenoid-ui start 
 ```
+
+- Pour arrêter les conteneurs: 
+```bash
+./cm_darwin_amd64 selenoid stop 
+```
