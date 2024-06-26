@@ -21,7 +21,7 @@ chmod +x cm_darwin_amd64
 ./cm_darwin_amd64 selenoid start --vnc
 ```
 
-- Pour lancer le selenium ui: 
+- Pour lancer le selenoid ui (Conteneur qui permet de visualiser les tests sur le navigateur) :   
 ```bash
 ./cm_darwin_amd64 selenoid-ui start 
 ```
