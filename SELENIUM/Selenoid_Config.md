@@ -35,3 +35,6 @@ chmod +x cm_darwin_amd64
 ```bash
 ./cm_darwin_amd64 selenoid update
 ```
+
+## REMARQUE IMPORTANTE
+> Sur Ubuntu, le fichier de configuration de selenoid est créé dans le répertoire /etc/selenoid/browsers.json
