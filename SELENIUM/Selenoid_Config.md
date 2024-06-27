@@ -37,4 +37,4 @@ chmod +x cm_darwin_amd64
 ```
 
 ## REMARQUE IMPORTANTE
-> Sur Ubuntu, le fichier de configuration de selenoid est créé dans le répertoire /etc/selenoid/browsers.json
+> Sur Ubuntu, le fichier de configuration de selenoid est créé dans le répertoire ***``/.aerokube/selenoid/browsers.json``***
