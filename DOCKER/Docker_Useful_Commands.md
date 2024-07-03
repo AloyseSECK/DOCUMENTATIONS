@@ -40,3 +40,13 @@ __Cette commande permet de rediriger la sortie sur le port 10000 de la machine l
 
 __Cette commande permet d'arrêter tous les conteneurs en cours d'exécution__
 
+
+# `$ docker network ls`
+
+__Cette commande permet d'afficher tous les réseaux docker__
+
+
+# `$ docker network inspect <nom_du_réseau>`
+
+__Cette commande permet d'afficher les informations d'un réseau spécifique__
+
