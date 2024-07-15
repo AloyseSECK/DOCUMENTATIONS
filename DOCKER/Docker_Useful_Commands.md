@@ -50,3 +50,6 @@ __Cette commande permet d'afficher tous les réseaux docker__
 
 __Cette commande permet d'afficher les informations d'un réseau spécifique__
 
+# `$ sudo aa-remove-unknown`
+__Permission denied error cannot kill or stop container__
+__Cette commande permet de supprimer les profils apparmor inutiles__
