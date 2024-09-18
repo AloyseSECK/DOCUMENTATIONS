@@ -2,6 +2,9 @@
 
 ## DOCKER USEFUL COMMANDS
 
+## sudo usermod -aG docker $USER
+__Exécuter la commande docker sans le sudo__
+
 ## `$ docker ps -a`
 __Affiche une liste des conteneurs en cours d'exécution. Le flag -a permet d'afficher tous les conteneurs qu'ils soient en exécution ou NON__
 
