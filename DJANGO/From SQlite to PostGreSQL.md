@@ -35,12 +35,28 @@ DATABASES = {
     }
 }
 ```
+
 ## 6. Migrate the database
 ```bash
 python manage.py migrate
 ```
+## 7. Retrieve the data from the previous database by launching this script in the Django shell
+```python
+import json
 
-## 7. Load the data from the previous database
+# Load the JSON data
+with open('datadump.json', 'r') as file:
+    data = json.load(file)
+
+# Filter out the database data
+database_data = [entry for entry in data if entry['model'] not in ['auth.permission', 'contenttypes.contenttype', 'sessions.session']]
+
+# Write the filtered data to a new JSON file
+with open('filtered_data.json', 'w') as outfile:
+    json.dump(database_data, outfile, indent=4)
+```
+
+## 8. Load the data from the previous database
 ```bash
-python manage.py loaddata db.json
+python manage.py loaddata filtered_data.json
 ```
