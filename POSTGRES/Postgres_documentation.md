@@ -25,3 +25,5 @@ Type the commands :
 # HOW TO CHANGE DATABASE OWNER
 - `ALTER DATABASE database_name OWNER TO new_owner;`
 
+# HOW TO CONNECT TO A DATABASE
+- `psql -h localhost -U username -d mydatabase`
