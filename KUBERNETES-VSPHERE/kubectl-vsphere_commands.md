@@ -63,6 +63,9 @@ kubectl delete pod <nom> -n <namespace>    # Supprime un pod
 ```bash
 kubectl exec -it <nom-du-pod> -- /bin/sh   # Ouvre un shell dans un pod
 ```
+```bash
+kubectl exec -it <nom_du_pod> -n <namespace> -- /bin/sh # Ouvre un shell dans un pod et dans le mamespace spécifié
+```
 
 ## 4. Gestion des déploiements
 ```bash
