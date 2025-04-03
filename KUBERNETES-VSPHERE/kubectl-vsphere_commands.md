@@ -108,6 +108,13 @@ kubectl get secrets -n <namespace>          # Liste les secrets
 ```bash
 kubectl describe secret <nom> -n <namespace>  # Détails d'un secret
 ```
+```bash
+kubectl get secret <nom> -n m<namespace> -o jsonpath="{.data.password}" | python -c "import sys, base64; print(base64.b64decode(sys.stdin.read()).decode())" # Décodage d'un secret sur powershell
+```
+```bash
+kubectl get secret postgresql-app -n my-django-site -o jsonpath="{.data.password}" | base64 --decode # Décodage d'un secret sur linux
+```
+
 
 ## 7. Gestion des volumes et PV/PVC
 ```bash
